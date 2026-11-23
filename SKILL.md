@@ -9,6 +9,11 @@ You edit her reel in a real Edits project. She can tweak anything by hand afterw
 last button. Talk in plain English: she's a business owner, not a video editor or a developer. Australian spelling.
 
 **Paths in this file:** `SKILL_DIR` = the folder this SKILL.md is in. Scripts live in `SKILL_DIR/scripts/`.
+`LOOKS` = the shared **Reel Looks** library (the 11 looks + 8 formats, also used by the Claude Video Editor):
+`$REEL_LOOKS_DIR` if it's set, else `~/.agents/skills/reel-looks`, else `~/.claude/skills/reel-looks`. Its `index.json`
+lists every look and format with the names people use; each one is a folder `LOOKS/looks/<slug>/` or
+`LOOKS/formats/<slug>/` with `SPEC.md` (every number), `USE.md` (how this skill uses it) and the HyperFrames code.
+**Missing?** Install it (README "For Claude or Codex doing the install", step 2) before section 4.
 
 ## What she might say (and where to go)
 
@@ -70,9 +75,9 @@ From then on read `profile.md` at the start of every session and never ask these
 2. In Edits: Settings > Automation > **Enable Automation Server** on.
 3. The connection command from that screen (the "Claude Code" or "Codex" Copy button) has been run. If she pastes it
    into the chat and says "connect this for me", run it for her once in the terminal exactly as pasted, don't repeat
-   it back, don't save it anywhere else, and tell her: "Done. That line has a private key in it, so don't share it or
-   show it on a screen recording. If you ever do, hit Regenerate access token in Edits." Never run `claude mcp get`
-   (it can print the token).
+   it back, don't save it anywhere else, and tell her: "Done. That line has a private key in it. It only unlocks Edits
+   on this Mac, but don't post it or show it on a screen recording. If it was ever shown publicly, hit Regenerate
+   access token in Edits and paste me the new line." Never run `claude mcp get` (it can print the token).
 4. **A project must be open in Edits BEFORE the chat starts.**
 
 Check: look for Edits tools (named like `mcp__metapilot-native__*`; the name can change, so look for tools such as
@@ -109,7 +114,7 @@ She picks **one look** (how it looks) and optionally **one format** (how it's st
 Just you; stories and hot takes -> Full. Never mix two looks in one reel. Her own saved looks live in
 `SKILL_DIR/my-looks/` and count as looks too.
 
-**Looks** (template folder `templates/<slug>/`; quick recipe in `styles/` where there is one):
+**Looks** (folder `LOOKS/looks/<slug>/`; quick recipe in `SKILL_DIR/styles/` where there is one):
 
 | Look (gallery name) | Slug | Quick recipe | Edits must do natively |
 |---|---|---|---|
@@ -125,7 +130,7 @@ Just you; stories and hot takes -> Full. Never mix two looks in one reel. Her ow
 | Iman Gadzhi ("Value-only motion") | `iman-gadzhi` | from SPEC | nothing extra; never more than 35% of the reel animated |
 | Calm luxury | `calm-luxury` | from SPEC | almost everything (locked frame, one serif line, no SFX) |
 
-**Formats** (any format works with any look):
+**Formats** (folder `LOOKS/formats/<slug>/`; any format works with any look):
 
 | Format (gallery name) | Slug | Quick recipe |
 |---|---|---|
@@ -149,7 +154,7 @@ keep their own fonts and colours, but she may swap the accent for her brand colo
 ## 5. Quick or premium?
 
 - **Quick (default):** built entirely with Edits' own tools plus a few PNGs. Works on any Mac with Edits. Follow the
-  look's quick recipe file; for looks marked "from SPEC", read `templates/<slug>/SPEC.md` and build what Edits can do
+  look's quick recipe file; for looks marked "from SPEC", read its `SPEC.md` in `LOOKS` and build what Edits can do
   natively (cuts, captions, fonts, colours, boxed text as PNGs, cards, zooms, grade, sounds). Skip motion Edits can't
   do (typed-on text, text behind the head, animated cards) and tell her in one line what premium would add.
 - **Premium:** the template's motion graphics rendered with HyperFrames as one see-through overlay video, then

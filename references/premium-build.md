@@ -17,13 +17,16 @@ Check, and only offer premium if all of these are true (otherwise use the quick 
 ## Steps
 1. **Footage.** Her take in `~/Movies/Edits-inbox/`, already SDR (`scripts/hdr_to_sdr.sh`) and levelled
    (`scripts/level_voice.sh`).
-2. **Working copy.** Copy `templates/<slug>/` to `~/Movies/Edits-builds/<YYYY-MM-DD>-<slug>-<topic>/` AND copy
-   `templates/_shared/` to `~/Movies/Edits-builds/_shared/` (several templates import `../_shared/reeltools.py`).
-   Keep builds out of the skill folder (they're big, and updates would clash with them).
-3. **Read the template.** Its `SPEC.md` (the "Using this template" block, "How a member's version differs", every
-   number) and the usage notes at the top of its `cut.py` and `build.py`. The commands and config file differ per
+2. **Working copy.** The templates live in the shared Reel Looks library (`LOOKS`, see SKILL.md: `index.json` finds
+   the folder). Copy `LOOKS/looks/<slug>/` (or `LOOKS/formats/<slug>/`) to
+   `~/Movies/Edits-builds/<YYYY-MM-DD>-<slug>-<topic>/` AND copy `LOOKS/_shared/` to `~/Movies/Edits-builds/_shared/`
+   (several templates import `../_shared/reeltools.py`). Keep builds out of both the skill and the library folder
+   (they're big, and updates would clash with them).
+3. **Read the template.** Its `USE.md` (the Edits route), its `SPEC.md` (the "Using this template" block, "How a
+   member's version differs", every number) and the usage notes at the top of its `cut.py` and `build.py`. Where the
+   docs say `$PY`, use this skill's Python: `~/.instagram-edits/venv/bin/python`. The commands and config file differ per
    template. Templates were first written for one demo take, so Claude adapts the example values to her take.
-4. **Fonts.** `bash scripts/get_fonts.sh <slug> <build folder>`.
+4. **Fonts.** `bash LOOKS/_shared/get_fonts.sh <slug> <build folder>`.
 5. **Brand.** Where build.py has a `BRAND` block, fill it from `profile.md` (ink, accent, light, fonts).
 6. **Rough cut + words.** Run the template's cut step with `~/.instagram-edits/venv/bin/python`. Some templates read
    a words file made by a one-line mlx_whisper command in their SPEC/docstring. Proofread every word (brand names,
