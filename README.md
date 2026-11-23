@@ -21,8 +21,8 @@ first time and saves them on your Mac.
 - **Claude Code** or **Codex**.
 - **ffmpeg** (free). Claude checks for it and offers to install it with Homebrew; it always asks first.
 
-That's it for the normal (quick) edits. The premium versions of the looks also need Node.js 22+ and HyperFrames;
-Claude offers to set those up only if you ask for premium.
+That's it. Claude builds every look with Edits' own tools, so there's nothing else to set up apart from a small
+Python toolbox for drawing boxed text, which Claude offers to install the first time (it asks first).
 
 ---
 
@@ -112,8 +112,11 @@ it shows you exactly what it will post and waits for your yes.
 
 See them all (with a demo reel each) in the **Reel Look Library**: https://claude.ai/artifact/N46Gep95Kujh6TWQyV2y2r
 
-They live in the shared **Reel Looks** library (https://github.com/BrookeW1988/reel-looks), so the Claude Video Editor
-can make the same looks as finished videos.
+They live in the shared **Reel Looks** library (https://github.com/BrookeW1988/reel-looks). This skill builds every
+look inside Edits with Edits' own tools: captions, text presets and animations, sound effects, zooms, filters,
+transitions, split screen and cut-outs. Where a look's signature move isn't possible in Edits, Claude does the closest
+Edits version and tells you what it swapped. The fully animated (motion graphics) versions are made by the separate
+Claude Video Editor skill.
 
 - **Looks** (how it looks): Just you · Full · Hormozi classic · Hormozi 2026 · Codie Sanchez · Diary of a CEO ·
   Nana Del Rey · Mariah Brunner · Nick Saraev · Iman Gadzhi · Calm luxury
@@ -140,24 +143,22 @@ Edits has (Edits has no GIF search for Claude). Tell Claude where you saved it.
 SKILL.md                    the instructions Claude follows
 profile.example.md          what your profile looks like (yours is saved as profile.md on first run)
 library-map.md              Edits sound effects and caption styles that worked in testing
-styles/                     quick recipes: each look or format built with Edits' own tools
-                            (the premium templates, with every number in SPEC.md, are in the Reel Looks library)
+styles/                     recipes: every look and format, built with Edits' own tools
+                            (every number for each look is in its SPEC.md in the Reel Looks library)
 references/
   edits-tool-notes.md       every Edits tool quirk found so far
-  premium-build.md          how the premium route works
   make-your-own-look.md     how "save my style as a new look" works
 scripts/
   grab_newest_video.sh      newest video in Downloads -> Movies/Edits-inbox, HDR -> SDR
   hdr_to_sdr.sh             iPhone HDR -> SDR with Apple's own converter (built into macOS)
   level_voice.sh            evens out your voice to Instagram loudness (-14 LUFS) before editing
   make_text_card.py         draws boxed text hooks and number cards as see-through PNGs
-  setup_python.sh           sets up the small Python toolbox (Pillow; premium adds mlx-whisper)
-  prep_overlay.sh           gets a premium overlay ready to render
+  setup_python.sh           sets up the small Python toolbox (Pillow, for the boxed text)
 my-looks/                   looks you create from your own reels (yours, never overwritten)
 ```
 
-Things that land on your Mac: your videos in `~/Movies/Edits-inbox/`, cards and overlays in `~/Movies/Edits-assets/`,
-premium builds in `~/Movies/Edits-builds/`, and the Python toolbox in `~/.instagram-edits/`. Delete any of them any time.
+Things that land on your Mac: your videos in `~/Movies/Edits-inbox/`, cards, GIFs and fonts in `~/Movies/Edits-assets/`,
+and the Python toolbox in `~/.instagram-edits/`. Delete any of them any time.
 
 ---
 
@@ -172,5 +173,5 @@ premium builds in `~/Movies/Edits-builds/`, and the Python toolbox in `~/.instag
 ## Licence
 
 The code and instructions are MIT licensed (see `LICENSE`). No fonts, sounds, GIFs or videos are included. The fonts the
-templates download are free Google Fonts under the SIL Open Font Licence; SF Pro is Apple's font and is only ever copied
-from your own Mac for your own builds. See `FONTS.md` in the Reel Looks library.
+looks use are free Google Fonts under the SIL Open Font Licence; SF Pro is Apple's font and is only ever used from your
+own Mac. See `FONTS.md` in the Reel Looks library.

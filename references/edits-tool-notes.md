@@ -77,11 +77,11 @@ behaviour into the "Notes from my sessions" section of `profile.md`.
   or share from the window. Her own audio files export fine.
 - Unknown: whether library SOUND EFFECTS survive a Claude export. Check the first export with her and note it.
 
-## Overlays (the premium route)
-- A ProRes 4444 .mov with alpha via `addOverlay` (x 0.5, y 0.5, scale 1.0) keeps full transparency in the preview
-  AND the export, soft shadows included. It lands full frame.
-- Edits plays the overlay clip's own audio, so sounds can be baked into the overlay .mov.
-- Don't `generateCaptions` when the overlay already has captions.
+## Overlays (her own video or image files)
+- A see-through video she supplies (a .mov with transparency, e.g. ProRes 4444) via `addOverlay` (x 0.5, y 0.5,
+  scale 1.0) keeps its transparency in the preview AND the export, soft shadows included. It lands full frame.
+- Edits plays an overlay clip's own audio, so any sound inside her file is heard and exported.
+- Don't `generateCaptions` when her overlay already has captions in it.
 
 ## Checking
 - `frameSheet` with empty id/path + a list of times = a contact sheet of the edit. Use it on every cut.

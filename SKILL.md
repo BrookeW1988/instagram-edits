@@ -12,8 +12,9 @@ last button. Talk in plain English: she's a business owner, not a video editor o
 `LOOKS` = the shared **Reel Looks** library (the 11 looks + 8 formats, also used by the Claude Video Editor):
 `$REEL_LOOKS_DIR` if it's set, else `~/.agents/skills/reel-looks`, else `~/.claude/skills/reel-looks`. Its `index.json`
 lists every look and format with the names people use; each one is a folder `LOOKS/looks/<slug>/` or
-`LOOKS/formats/<slug>/` with `SPEC.md` (every number), `USE.md` (how this skill uses it) and the HyperFrames code.
-**Missing?** Install it (README "For Claude or Codex doing the install", step 2) before section 4.
+`LOOKS/formats/<slug>/`. This skill reads only its `SPEC.md` (every number and the feel of the look) and `USE.md`
+(which recipe to follow), then builds the look in Edits. The other files in those folders belong to the Claude Video
+Editor: never run them. **Missing?** Install it (README "For Claude or Codex doing the install", step 2) before section 4.
 
 ## What she might say (and where to go)
 
@@ -46,7 +47,8 @@ lists every look and format with the names people use; each one is a folder `LOO
 - **Looks are "inspired by" a creator's editing techniques only.** Never their footage, logos, wordmarks, music or
   catchphrases.
 - **The Edits access token stays private** (section 2).
-- **Ask before installing anything** (ffmpeg, Node, Python extras, yt-dlp). Say what it is and why in one line.
+- **Ask before installing or downloading anything** (ffmpeg, the Python toolbox, yt-dlp, a free font). Say what it is
+  and why in one line.
 - Edits updates about weekly and Meta can switch the automation server off. If a tool errors, say so plainly;
   don't guess or work around it by clicking the Edits window (one button as a last resort at most).
 
@@ -114,25 +116,25 @@ She picks **one look** (how it looks) and optionally **one format** (how it's st
 Just you; stories and hot takes -> Full. Never mix two looks in one reel. Her own saved looks live in
 `SKILL_DIR/my-looks/` and count as looks too.
 
-**Looks** (folder `LOOKS/looks/<slug>/`; quick recipe in `SKILL_DIR/styles/` where there is one):
+**Looks** (folder `LOOKS/looks/<slug>/`; every one has a recipe in `SKILL_DIR/styles/`):
 
-| Look (gallery name) | Slug | Quick recipe | Edits must do natively |
+| Look (gallery name) | Slug | Recipe | Signature Edits moves |
 |---|---|---|---|
-| Just you | `just-you` | `styles/just-you.md` | nothing extra |
-| Full | `full` | `styles/full.md` | 112% / 125% punch-ins on the big lines |
-| Hormozi classic ("Bold Word Pop") | `hormozi-classic` | `styles/hormozi-classic.md` | punch-ins 1.00 / 1.18, one 1.30 |
-| Hormozi 2026 ("Red Tag Desk Talk") | `hormozi-2026` | from SPEC | one 1.15 punch-in |
-| Codie Sanchez ("Studio editorial") | `codie-sanchez` | from SPEC | alternate 1.00 / 1.18 framing on each cut; warm grade |
-| Diary of a CEO ("Podcast clip") | `diary-of-a-ceo` | from SPEC | three crops (1.0 / 1.2 / 1.3) switched on each join; B&W on the last line |
-| Nana Del Rey ("Soft Cinema") | `nana-del-rey` | from SPEC | darker, warmer grade |
-| Mariah Brunner ("Receipts Round Your Head") | `mariah-brunner` | from SPEC | nothing extra |
-| Nick Saraev ("The Recompose") | `nick-saraev` | from SPEC | the clip shrinks/moves for split and full-screen beats (SPEC keyframes) |
-| Iman Gadzhi ("Value-only motion") | `iman-gadzhi` | from SPEC | nothing extra; never more than 35% of the reel animated |
-| Calm luxury | `calm-luxury` | from SPEC | almost everything (locked frame, one serif line, no SFX) |
+| Just you | `just-you` | `styles/just-you.md` | boxed hook, small captions, one picture card per named thing |
+| Full | `full` | `styles/full.md` | 112% / 125% punch-ins on the big lines, cards, GIFs |
+| Hormozi classic ("Bold Word Pop") | `hormozi-classic` | `styles/hormozi-classic.md` | caps captions with the spoken word lit; punch-ins 1.00 / 1.18, one 1.30 |
+| Hormozi 2026 ("Red Tag Desk Talk") | `hormozi-2026` | `styles/hormozi-2026.md` | red tag PNG for 4.5 s, small hard-swap captions, one 1.15 punch-in |
+| Codie Sanchez ("Studio editorial") | `codie-sanchez` | `styles/codie-sanchez.md` | serif captions, alternate 1.00 / 1.18 framing on each cut, warm grade |
+| Diary of a CEO ("Podcast clip") | `diary-of-a-ceo` | `styles/diary-of-a-ceo.md` | hook on black boxes, three crops (1.0 / 1.2 / 1.3) on each join, B&W last line |
+| Nana Del Rey ("Soft Cinema") | `nana-del-rey` | `styles/nana-del-rey.md` | giant butter words above the head, cream subtitles, darker warmer grade |
+| Mariah Brunner ("Receipts Round Your Head") | `mariah-brunner` | `styles/mariah-brunner.md` | real receipts above the head on the word, one-word captions, a sound per landing |
+| Nick Saraev ("The Recompose") | `nick-saraev` | `styles/nick-saraev.md` | the clip shrinks and moves (keyframes) for split and full-screen proof beats |
+| Iman Gadzhi ("Value-only motion") | `iman-gadzhi` | `styles/iman-gadzhi.md` | graphics only on value lines, never more than 35% of the reel |
+| Calm luxury | `calm-luxury` | `styles/calm-luxury.md` | locked frame, one white serif line, warm grade, no SFX |
 
 **Formats** (folder `LOOKS/formats/<slug>/`; any format works with any look):
 
-| Format (gallery name) | Slug | Quick recipe |
+| Format (gallery name) | Slug | Recipe |
 |---|---|---|
 | Pop-up proof | `pop-up-proof` | `styles/pop-up-proof.md` |
 | Text over B-roll | `text-over-broll` | `styles/text-over-broll.md` |
@@ -151,21 +153,29 @@ keep their own fonts and colours, but she may swap the accent for her brand colo
 **"Now do it in the X look":** start a NEW Edits project (`newProject`, then name it with `setTitle`, e.g.
 "<topic> - pop-up proof"), keep the first one untouched, and rebuild from the same take.
 
-## 5. Quick or premium?
+## 5. Built in Edits, with Edits' own tools
 
-- **Quick (default):** built entirely with Edits' own tools plus a few PNGs. Works on any Mac with Edits. Follow the
-  look's quick recipe file; for looks marked "from SPEC", read its `SPEC.md` in `LOOKS` and build what Edits can do
-  natively (cuts, captions, fonts, colours, boxed text as PNGs, cards, zooms, grade, sounds). Skip motion Edits can't
-  do (typed-on text, text behind the head, animated cards) and tell her in one line what premium would add.
-- **Premium:** the template's motion graphics rendered with HyperFrames as one see-through overlay video, then
-  dropped into Edits. Needs Node 22+, HyperFrames and the Python extras. Offer it only when she asks for the "full"
-  version of a look, or the look depends on motion (pop-up proof's words behind the head, Nick Saraev's recompose).
-  Steps: `references/premium-build.md`.
+The whole point of this skill is using the tools inside Edits. Every look and format is built with Edits' own tools
+only: cuts and speed, captions (caption styles, highlight colour, fonts), text presets and text animations, stickers
+and GIFs (her files), the Edits sound effects library, zooms and keyframes, filters and colour, transitions, split
+screen and subject cut-outs. The one extra is boxed text, which Edits can't draw: `scripts/make_text_card.py` makes
+hooks, labels and number cards as see-through PNGs that go into Edits with `addOverlay`. Nothing gets rendered.
+
+- **Follow the recipe:** `SKILL_DIR/styles/<slug>.md`. It already turns the look's `SPEC.md` into Edits steps. Open
+  the SPEC only for a number the recipe doesn't give, and skip any build or render commands in it, and any line
+  about an overlay `.mov` (that's the Claude Video Editor's route).
+- **Can't be done in Edits?** Some signature moves (typed-on text, words behind the head, animated proof cards,
+  counting numbers) aren't possible with Edits' tools. Do the closest Edits version and tell her in one line what you
+  swapped, e.g. "Edits can't tuck words behind your head, so the big words sit above it instead."
+- **Fonts:** looks with their own fonts name them (free Google Fonts). If the file isn't on her Mac yet, ask before
+  downloading it, save it in `~/Movies/Edits-assets/fonts/` and import it with `importAccountFont`.
+- **Want the fully animated version?** The motion-graphics versions of these looks are made by the separate Claude
+  Video Editor skill (part of the member course). This skill sticks to what Edits can do.
 
 The first time takes about five minutes while you find your way around Edits, and she can watch the timeline fill
 up. Say that up front.
 
-## 6. Quick build steps (in Edits)
+## 6. Build steps (in Edits)
 
 The chosen look/format file overrides these wherever it says something different.
 

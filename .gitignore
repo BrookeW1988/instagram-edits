@@ -3,12 +3,8 @@ profile.md
 my-looks/*
 !my-looks/README.md
 
-# Build leftovers, in case a template is ever run inside this folder
+# Python and Mac leftovers
 __pycache__/
 *.pyc
-node_modules/
-.hyperframes/
-renders/
-assets/
 .DS_Store
 .env

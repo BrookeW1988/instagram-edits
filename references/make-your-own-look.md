@@ -50,4 +50,4 @@ Use her brand colours from `profile.md` where the reels use them; otherwise keep
 
 ## 4. Show her
 Summarise the look in plain words (5-6 lines) and offer to try it on her newest video. From then on,
-"edit this in the <short-name> look" uses `my-looks/<short-name>.md` exactly like a built-in quick recipe.
+"edit this in the <short-name> look" uses `my-looks/<short-name>.md` exactly like a built-in recipe.

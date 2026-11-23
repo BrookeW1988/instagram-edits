@@ -6,10 +6,36 @@ listened to these in a finished reel yet**: play them before you trust them.
 
 Your OWN confirmed picks go in `profile.md` under "My Edits picks" (that file is yours and survives updates).
 
+## Look and format recipes
+Every look and format is built with Edits' own tools from its recipe in `styles/`. The numbers come from its
+`SPEC.md` in the Reel Looks library (`LOOKS/looks/<slug>/` or `LOOKS/formats/<slug>/`).
+
+| Look or format | Slug | Recipe |
+|---|---|---|
+| Just you | `just-you` | `styles/just-you.md` |
+| Full | `full` | `styles/full.md` |
+| Hormozi classic | `hormozi-classic` | `styles/hormozi-classic.md` |
+| Hormozi 2026 | `hormozi-2026` | `styles/hormozi-2026.md` |
+| Codie Sanchez | `codie-sanchez` | `styles/codie-sanchez.md` |
+| Diary of a CEO | `diary-of-a-ceo` | `styles/diary-of-a-ceo.md` |
+| Nana Del Rey | `nana-del-rey` | `styles/nana-del-rey.md` |
+| Mariah Brunner | `mariah-brunner` | `styles/mariah-brunner.md` |
+| Nick Saraev | `nick-saraev` | `styles/nick-saraev.md` |
+| Iman Gadzhi | `iman-gadzhi` | `styles/iman-gadzhi.md` |
+| Calm luxury | `calm-luxury` | `styles/calm-luxury.md` |
+| Pop-up proof (format) | `pop-up-proof` | `styles/pop-up-proof.md` |
+| Text over B-roll (format) | `text-over-broll` | `styles/text-over-broll.md` |
+| Serialised episode (format) | `serialised-episode` | `styles/serialised-episode.md` |
+| Before-and-after (format) | `before-after-reveal` | `styles/before-after-reveal.md` |
+| POV skit (format) | `pov-skit` | `styles/pov-skit.md` |
+| Green-screen proof (format) | `green-screen-proof` | `styles/green-screen-proof.md` |
+| Timestamp vlog (format) | `timestamp-vlog` | `styles/timestamp-vlog.md` |
+| Yes... but (format) | `yes-but-split` | `styles/yes-but-split.md` |
+
 ## Known facts
 - Claude CAN search the sound-effect library by keyword (`searchSoundEffects`, up to 20 ids for `addSoundEffect`).
 - Claude can NOT search GIFs or stickers (`addGif` / `addSticker` only take a file path).
-- Transparent ProRes 4444 overlays keep their transparency in the preview and the export.
+- See-through video overlays she supplies (a .mov with transparency) keep it in the preview and the export.
 - An overlay clip's own audio plays and exports.
 - Claude's export works (`resolutionType` HD, `aspectRatio` nineBySixteen, `quality` high).
 - Library MUSIC goes silent in Claude's exports. Library SFX in exports: not yet checked.
