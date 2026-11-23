@@ -1,0 +1,14 @@
+# Your own stuff: never uploaded, never overwritten by updates
+profile.md
+my-looks/*
+!my-looks/README.md
+
+# Build leftovers, in case a template is ever run inside this folder
+__pycache__/
+*.pyc
+node_modules/
+.hyperframes/
+renders/
+assets/
+.DS_Store
+.env
