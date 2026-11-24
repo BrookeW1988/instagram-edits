@@ -89,7 +89,9 @@ Copy this whole folder (named `instagram-edits`) to `~/.claude/skills/instagram-
 | Say this | What happens |
 |---|---|
 | **grab my newest video from Downloads and get it ready for Edits** | Finds the newest video in Downloads (AirDrop puts phone videos there), copies it into `Movies/Edits-inbox` (Edits can only open videos from your Movies folder), and switches it out of iPhone HDR so you don't look washed out on Instagram |
-| **/instagram-edits** | Starts an edit: Claude rough-cuts it in Edits and suggests the style that fits your footage |
+| **/instagram-edits** | Starts an edit: Claude reads your video, shows you an edit plan with timings, rough-cuts it in Edits and builds it in the style that fits |
+| **just edit it** | A proper editor pass with no style: rough cut, captions, punch-ins and pacing |
+| **just do the rough cut** | Cuts your pauses and false starts in Edits, then hands it back |
 | **edit this in the Show it style** | Builds the edit in your open Edits project in that style |
 | **now do it in the Clean style** | Rebuilds the same video in a new Edits project, in a different style |
 | **analyse my editing style frame by frame and save it as a new look** (+ links to 3 of your reels) | Measures your reels and saves your style as a look you can reuse |
@@ -136,7 +138,8 @@ profile.example.md          what your profile looks like (yours is saved as prof
 library-map.md              Edits sounds, music and effects that worked in testing
 styles/                     the 4 style recipes (clean, show-it, broll-story, minimal)
 references/
-  editing-craft.md          the editing rules every edit follows: rough cut, pacing, caption sizes, fonts, the final check
+  editing-craft.md          how a good editor thinks: the edit plan, rough cut, pacing, punch-ins, captions, sound, the final check
+  edits-equivalents.md      which Edits tools do each editor move (cut, punch-in, J-cut, cutaway, music...)
   edits-tool-notes.md       every Edits tool quirk found so far
   fonts.md                  which free font each style uses and what Edits calls it
   make-your-own-look.md     how "save my style as a new look" works

@@ -19,6 +19,8 @@ style recipes in `SKILL_DIR/styles/`, and the editor's rulebook in `SKILL_DIR/re
 | "list the tools you have in Edits" | Section 2: count them and describe the groups in plain English |
 | "grab my newest video from Downloads and get it ready for Edits" | Section 3 |
 | "edit this" / "edit this in the Show it style" / "/instagram-edits" | Sections 4-7 |
+| "just edit it" / "no style, just a good edit" | Sections 4-7 with no style: the editor pass (rough cut, captions, punch-ins, pacing) in Clean's caption look |
+| "just do the rough cut" | Section 5 steps 1-3 only, then hand over |
 | "now do it in the Clean style" | Rebuild from the SAME take in a NEW Edits project (keep the first one) |
 | "analyse my editing style frame by frame and save it as a new look" (+ reel links) | `references/make-your-own-look.md` |
 | "write my caption" | Section 9 |
@@ -101,7 +103,9 @@ Before editing, read `references/edits-tool-notes.md` (every tool quirk we know 
 
 ## 4. Pick the style (from the footage)
 
-Read `references/editing-craft.md` now; it's the order every edit follows. Then match the style to what she filmed:
+Read `references/editing-craft.md` now: it's how a good editor thinks, and the order every edit follows.
+`references/edits-equivalents.md` says which Edits tools do each editor move (cut, punch-in, J-cut, cutaway...).
+Then match the style to what she filmed:
 
 | Style | Inspired by | Needs | Recipe |
 |---|---|---|---|
@@ -121,13 +125,17 @@ https://claude.ai/artifact/N46Gep95Kujh6TWQyV2y2r
 1. **New project:** `saveProject` the open one first, then `newProject` (if it errors, check `title` + `clips`:
    the new project often opened anyway) -> `setTitle` ("<topic> - <style>") -> `setProjectDynamicRange` sdr ->
    `setCanvas` 9:16 at 30 fps -> `addMedia` the take (full path).
-2. **Rough cut in Edits** (editing-craft section 1): `transcribeClip` -> `jobStatus` -> plan the cuts from the word
-   times -> `splitAt` -> `selectById` the dead pieces -> `delete`. Speed from `profile.md`.
-3. **Follow the style recipe** step by step: captions, graphics, B-roll, sound, grade. Its numbers are tested.
-4. **Graphics Edits can't draw** (cards with a screenshot inside, word stacks with a soft shadow, tight-spaced giant
+2. **Watch it and write the edit plan** (editing-craft sections 1-2): `transcribeClip` -> `jobStatus`, read every
+   word, then write the plan (hook, payoff, what gets cut, and a line per moment: time, her words, what happens
+   on screen). Show it to her in plain English, then build exactly that.
+3. **Rough cut in Edits** (editing-craft section 3): `splitAt` at every cut point -> `selectById` the dead pieces ->
+   `delete`. Check the new length in `clips`. Speed from `profile.md`.
+4. **Follow the style recipe** step by step: captions (straight after the rough cut), then punch-ins, graphics,
+   B-roll, sound, grade, each on the plan's times. Its numbers are tested.
+5. **Graphics Edits can't draw** (cards with a screenshot inside, word stacks with a soft shadow, tight-spaced giant
    words) are made as see-through PNGs by `scripts/show_it_cards.py` and `scripts/word_stacks.py` and placed in
    Edits with `addOverlay`. Run them with `~/.instagram-edits/venv/bin/python`. Everything else is Edits' own tools.
-5. **Screens to show** (Show it): Claude finds them; she doesn't need a library. Her screenshots first, otherwise
+6. **Screens to show** (Show it): Claude finds them; she doesn't need a library. Her screenshots first, otherwise
    `scripts/grab_page_images.py` on the maker's own product page, then look and crop to the app window.
 
 The first edit takes about 10 minutes and she can watch the timeline fill up. Say that up front. `saveProject`

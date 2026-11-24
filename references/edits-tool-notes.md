@@ -122,3 +122,8 @@ behaviour into the "Notes from my sessions" section of `profile.md`.
 ## Posting
 - There is no share or post tool in build 456 (`shareToInstagram` is not exposed). She presses Share herself.
   If a share/post/delete tool ever appears, never call it without her yes for that exact reel.
+
+## The home-screen drop
+- Mid-session, Edits can fall back to its home screen (she clicked away, or a project closed). Every editor tool
+  then answers "Unknown tool". Don't panic or start a new chat: `projects` lists them, `openProject` (id + name)
+  reopens the one you were in, and the editor tools work again straight away.
