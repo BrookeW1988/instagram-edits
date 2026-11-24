@@ -1,7 +1,7 @@
 # Edits automation tools: what we've learned (read before building)
 
 Edits for Mac's automation server is young and changes about weekly. These notes come from real test sessions
-(Edits build 456, November 2026). If something here stops being true, say so plainly and write the new
+(Edits build 456, November 2026; updated 24/11/2026). If something here stops being true, say so plainly and write the new
 behaviour into the "Notes from my sessions" section of `profile.md`.
 
 ## Connecting
@@ -48,34 +48,57 @@ behaviour into the "Notes from my sessions" section of `profile.md`.
 - `generateCaptions` makes long phrases (up to 16 words) but most styles show 3-4 words at a time.
 - `listCaptionStyles` returns 73 names, but only 39 are caption styles; the other 34 are text presets.
 - A good base for a "pop" caption: **Word Highlight Box 2** + `setCaptionHighlightColor` (brand accent), then per
-  caption `setTextFont` (brand font, by its PostScript name) and `setTextPosition` y ~0.86 (the default y ~0.73
-  sits on the mouth). `captions` output is huge (~40 KB): call it once.
-- Remove captions under the text hook: select them + `delete`.
+  caption `setTextFont` (by the name Edits reports) and `setTextPosition` (each style gives its y; the default can
+  sit on her mouth). `captions` output is huge (~40 KB): call it once.
+- Hide a caption (e.g. under the hook or a big graphic): `setTextStyle` size 1. Don't delete captions (a deleted
+  caption can come back as a ghost you can't remove), and a transparent colour doesn't work (the style still draws it).
+- **Generate captions AFTER the rough cut and before any other split.** Splitting the clip after captions exist
+  makes Edits double words at the split points ("Ask ask", "So So"). If it happens, fix with `editCaption`.
+- `splitCaption` at a time between two words returns two new ids; the split snaps to the real word gap, so the new
+  captions' start times are exact word times (handy for timing graphics).
+- Edits writes times as "9:00 a.m.": fix to "9am" with `editCaption`.
+- Captions live on the LOWEST overlay layer, so overlays cover them. To put a caption on top of a screenshot,
+  `moveToLayer` the screenshot to a free low layer and the caption to the layer above it.
 - Proofread EVERY caption. Common mishears: "Claude" -> "cloud", "ChatGPT", product and brand names, her own
   name and business name. Fix with `editCaption`.
 - Named caption/text presets could not be saved through the tools (no tool for it). Re-apply the settings each reel.
 
 ## Text, cards, GIFs
-- Text has NO background-box setting in the tools. Boxed hooks and number cards are PNGs drawn with
-  `scripts/make_text_card.py`, added with `addOverlay`. `scale` = fraction of the canvas width. Hook: y 0.14,
-  scale ~0.8.
+- Text emphasis: `setEmphasis` with `outline` (any colour, e.g. `#00000080` for a soft dark edge) or
+  `backgroundPill` (always rounded). There's no soft shadow and no letter-spacing, so the Show it cards and the
+  word stacks are PNGs from `scripts/show_it_cards.py` / `scripts/word_stacks.py`, added with `addOverlay`.
+  `scale` = fraction of the canvas width.
+- Big Edits text wraps (its text box has a fixed width): keep the font size ~30-40 and use `setTransform` scale.
 - Photos default to 3 s on the timeline; change with `trim` (a negative delta lengthens).
 - GIFs: there's no GIF/sticker search. `addGif` / `addSticker` only take a file path. Use .mp4/.gif files she
   has (or the free editing pack) through `addOverlay` (y 0.15, scale 0.44 wide / 0.3 square), then `trim` to the beat.
 - No opacity or blur keyframes. Fades must be baked into the overlay file itself.
+- Blur a background behind a card: `splitAt` the main clip at the card's in/out, then `applyEffect`
+  `video_simple_blur` on that piece.
+- A white frame round a GIF or picture: `applyEffect` `video_plain_frame` on the overlay.
+- **Never use `addStickerFromCutout` on talking-head footage**: it's ONE still frame of her, so it ghosts the
+  moment she moves.
+
+## B-roll (swap the picture, keep her voice)
+- `extractAudio` on the take (voice to its own track) -> `splitAt` at the shot changes -> `replaceElementMedia`
+  each piece with a B-roll file (keeps position and length; 4K clips are fitted automatically) -> `setVolume` 0 on
+  every video piece. Overlaying B-roll instead would cover the captions.
+- To move her down under a screenshot (split screen): `setTransform` y ~0.68, scale 1, `allowBeyondCanvas` true.
 
 ## Zooms
-- Punch-ins: `splitAt` the main clip at a word gap, then `setTransform` scale 1.15-1.2 on that piece (a hard cut in).
+- Punch-ins: `splitAt` the main clip at a word gap, then `setTransform` scale 1.06-1.30 on that piece (a hard cut
+  in; anchor on her chin, see `styles/clean.md`).
 - Never zoom the main clip while a person cut-out is on screen in an overlay (it ghosts).
 
 ## Sound
 - `searchSoundEffects` works by keyword or category and returns up to 20 ids. Then `seek` + `addSoundEffect` by id,
-  then `setVolume` 0.3-0.45. Claude can't hear: tell her to listen.
+  then `setVolume` 0.3-0.35. Claude can't hear: tell her to listen.
 - Most "pop" results are notification blips. Prefer real-object sounds (a lip pop, paper, a pen) and never put a
   sound on top of a comment keyword.
-- **Edits library MUSIC goes silent in Claude's exports.** Leave music for her to add in the Edits window and export
-  or share from the window. Her own audio files export fine.
-- Unknown: whether library SOUND EFFECTS survive a Claude export. Check the first export with her and note it.
+- **Music:** `listMusicTracks` (query + `license` royaltyFree) -> `seek` 0 -> `addSongToComposition` with the
+  `audioAssetId` -> `setVolume` ~0.18. Royalty-free songs survive Claude's export (tested 24/11/2026: the tail
+  after her last word was ~10 dB louder than the raw take). `addMusicTrack` says it worked but places nothing.
+- Pause playback before `addSoundEffect`: sounds added while it plays land ~0.5 s late (fix with `move`).
 
 ## Overlays (her own video or image files)
 - A see-through video she supplies (a .mov with transparency, e.g. ProRes 4444) via `addOverlay` (x 0.5, y 0.5,

@@ -4,8 +4,8 @@
 # WHY a separate "venv" (a private Python folder): it keeps these extras away from anything else on your Mac,
 # so nothing else breaks and it's easy to delete (just remove ~/.instagram-edits).
 #
-#   bash setup_python.sh   -> installs Pillow, which draws the boxed text hooks and number cards as PNGs
-#                             (Edits' tools can't put a background box behind text).
+#   bash setup_python.sh   -> installs Pillow, which draws the Show it cards and the word stacks as see-through PNGs
+#                             (Edits can't put a screenshot inside a card or a soft shadow on text).
 #
 # Claude asks before running this. Needs python3 (macOS offers to install it the first time you type python3).
 

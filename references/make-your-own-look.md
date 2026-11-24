@@ -41,13 +41,17 @@ the files in `styles/` so the build steps can follow it:
 - **Use for** and **Needs**
 - **Look table** (1080x1920 sizes): hook font/size/box/position, captions, palette, cards, GIFs, zooms, grade,
   pacing, sound
-- **What Edits can do natively** vs **what needs a PNG overlay** (boxed text always needs a PNG)
+- **What Edits can do natively** vs **what needs a PNG overlay** (a soft shadow, tight letter-spacing, square
+  boxes or a screenshot inside a card all need a PNG: adapt `scripts/word_stacks.py` / `scripts/show_it_cards.py`)
+- **Footage it needs** (any take? a take that names things? B-roll?) so Claude knows when it fits
 - **Hook formulas** (3, in her voice, never someone else's catchphrases)
 - **Recipe** (numbered build steps)
 - **Do / don't**
 
 Use her brand colours from `profile.md` where the reels use them; otherwise keep the measured colours.
 
-## 4. Show her
-Summarise the look in plain words (5-6 lines) and offer to try it on her newest video. From then on,
+## 4. Prove it, then show her
+Build one test reel in the look, export it, and put `scripts/contact_sheet.sh` of the export next to a contact
+sheet of her reference reel. Fix whatever doesn't match (caption size is the usual miss), following
+`references/editing-craft.md`. Then summarise the look in plain words (5-6 lines) and show her the test. From then on,
 "edit this in the <short-name> look" uses `my-looks/<short-name>.md` exactly like a built-in recipe.

@@ -6,13 +6,10 @@
 
 ## Brand
 - Instagram handle: @yourhandle
-- Ink (text and caption boxes): #141414
-- Accent (one highlight colour): #FF5A36
-- Light (cream / card frames, optional): #FAF7F2
-- Hook font: SF Pro Bold (on every Mac) <!-- or your brand font, e.g. "Montserrat ExtraBold" -->
-- Caption font: Inter Bold
-- Font files (full paths, copied into ~/Movies/Edits-assets/fonts/): none yet
+- Accent (one brand colour; can replace the yellow / lavender in the styles): #FF5A36
+- Brand font (optional, file in ~/Movies/Edits-assets/fonts/, name as Edits reports it): none
 - Usual speed: 1.0x <!-- many talking-head creators speed takes to 1.1-1.3x -->
+- Favourite style: <!-- Clean / Show it / B-roll story / Minimal -->
 
 ## Caption voice
 - How I sound in three words: <!-- e.g. warm, straight-talking, funny -->
