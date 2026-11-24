@@ -63,7 +63,8 @@ One line per moment: time, what she says, what happens on screen. Ask nothing un
 ## 4. Pacing
 - **Something changes about every 2 seconds** on average: a cut, a punch-in, a card, a stack, a B-roll shot.
   Nothing on her face holds more than ~4 s without a change; no beat runs past 5 s. ("It's very SLOW, not enough beats.")
-- **No cut, punch-in or layout change inside the spoken hook.** The first change comes after it.
+- **No cut, punch-in or layout change inside the spoken hook.** The first change comes after it. (B-roll story may
+  open on a B-roll shot instead of her face, but still holds one shot through the hook.)
 - Changes land ON a word (the word that names the thing), never at a random time. Cut to B-roll on the key noun.
 - Leave MORE room after a big line, not less.
 - Her voice keeps running under graphics and B-roll (J and L cuts). Never a silent text block.
@@ -85,7 +86,7 @@ One line per moment: time, what she says, what happens on screen. Ask nothing un
 |---|---|---|---|---|---|
 | Clean | Montserrat Black | 84 | CAPS | y 0.77, centred | 2-3 words, spoken word in yellow |
 | Show it | Inter ExtraBold | 100 | as spoken | y 0.75 | ONE word at a time |
-| B-roll story | Inter Tight Regular | 54 | lowercase | y 0.88, x cycling 0.22 / 0.5 / 0.78 | 1-4 words |
+| B-roll story | Inter Tight Regular | 56 | lowercase (acronyms too) | y 0.85, x cycling 0.27 / 0.5 / 0.72 | 1-3 words |
 | Minimal | Newsreader | default | as spoken | y 0.80 | one short line |
 
 - Always set y with `setTextPosition` (Edits' default can land on her mouth). The table's y is a starting point:
@@ -149,7 +150,8 @@ One line per moment: time, what she says, what happens on screen. Ask nothing un
 Export, then `bash scripts/contact_sheet.sh <file>` (40 frames across the whole reel). Look at it next to the
 style's description in its recipe (and the creator's real reel if the recipe links one and you can open it). Then go
 through this list out loud and fix anything that fails (three passes at most, then tell her what's left):
-- [ ] Hook readable in frame 1, clear of her face; no cut inside the spoken hook.
+- [ ] Hook readable in frame 1 (the text hook, or B-roll story's first subtitle), clear of her face; no cut inside
+  the spoken hook.
 - [ ] Every caption readable at phone size, spelled right, not over her eyes or mouth, no doubled words.
 - [ ] Nothing clipped at any edge; nothing in the bottom 20% / right-edge button zone.
 - [ ] Something changes about every 2 s; nothing on her face over ~4 s without a change.
@@ -157,5 +159,6 @@ through this list out loud and fix anything that fails (three passes at most, th
 - [ ] No orphan words (a lone "a" or "the" left on screen with nothing after it; one-word-at-a-time caption
   styles are fine), no trims under 0.15 s, sign-off intact.
 - [ ] No ghosting, no frozen cut-outs, no transitions or shakes.
-- [ ] Length matches what the plan expected (rough cut removed what it said it would).
+- [ ] Length matches what the plan expected (rough cut removed what it said it would); no black frames at the end
+  (every voice, music and overlay clip ends with the video).
 - [ ] Sound: you can't hear it, so ask her to listen to the music level and the pops on her phone speaker.

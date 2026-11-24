@@ -28,7 +28,8 @@ behaviour into the "Notes from my sessions" section of `profile.md`.
 - `appState` returns ~60 KB of text. For quick checks use `title`, `clips` or `tracks` instead.
 
 ## Cutting
-- `transcribeClip` returns a job id: call `jobStatus` straight away.
+- `transcribeClip` with `background` false usually returns the words straight away; if it returns a job id instead,
+  call `jobStatus` until it's done.
 - `transcriptJumpCut` is NOT in build 456. Use `transcribeClip` + `findPauses`, then `splitAt` + `selectById` +
   `delete` (deleting ripples the main track closed).
 - `setSpeed` 1.3 works. After a trim and a speed change, timeline time = (source seconds - trim in) / speed.
@@ -71,7 +72,9 @@ behaviour into the "Notes from my sessions" section of `profile.md`.
   word stacks are PNGs from `scripts/show_it_cards.py` / `scripts/word_stacks.py`, added with `addOverlay`.
   `scale` = fraction of the canvas width.
 - Big Edits text wraps (its text box has a fixed width): keep the font size ~30-40 and use `setTransform` scale.
-- Photos default to 3 s on the timeline; change with `trim` (a negative delta lengthens).
+- Photos default to 3 s on the timeline; change with `trim` (a negative delta lengthens). Edits snaps to whole
+  frames: when overlays must sit back to back, check their start/end in `elements` and close any one-frame gap.
+- Every `addOverlay` makes its own track. That's normal; nothing to tidy.
 - GIFs: there's no GIF/sticker search. `addGif` / `addSticker` only take a file path. Use .mp4/.gif files she
   has (or the free editing pack) through `addOverlay` (y 0.15, scale 0.44 wide / 0.3 square), then `trim` to the beat.
 - No opacity or blur keyframes. Fades must be baked into the overlay file itself.
@@ -82,7 +85,10 @@ behaviour into the "Notes from my sessions" section of `profile.md`.
   moment she moves.
 
 ## B-roll (swap the picture, keep her voice)
-- `extractAudio` on the take (voice to its own track) -> `splitAt` at the shot changes -> `replaceElementMedia`
+- `extractAudio` on EACH main-track piece after the rough cut (one call per piece): each voice clip then matches its
+  piece exactly. Extracting from an uncut clip copies the whole original file (it ignores trims) and goes out of
+  sync. `clips` doesn't show audio; use `elements`.
+- `extractAudio` -> `splitAt` at the shot changes -> `replaceElementMedia`
   each piece with a B-roll file (keeps position and length; 4K clips are fitted automatically) -> `setVolume` 0 on
   every video piece. Overlaying B-roll instead would cover the captions.
 - To move her down under a screenshot (split screen): `setTransform` y ~0.68, scale 1, `allowBeyondCanvas` true.

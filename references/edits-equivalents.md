@@ -26,7 +26,7 @@ with `clips` (or `captions`) before the next move instead of reusing old numbers
 | Trim a clip's start or end | `trim` with `side` left/right and `deltaSeconds` (positive shortens, negative lengthens) |
 | Speed up talking | `setSpeed` (e.g. 1.1-1.3) on every main-track piece |
 | Reorder a section | `reorderClip` (rarely needed for talking heads) (untested) |
-| J-cut / L-cut (voice runs over the next shot) | `extractAudio` on the take (voice on its own track), then cut the PICTURE where you like with `splitAt` + `replaceElementMedia`; the voice keeps running underneath. |
+| J-cut / L-cut (voice runs over the next shot) | `extractAudio` on each piece (voice on its own track), then cut the PICTURE where you like with `splitAt` + `replaceElementMedia`; the voice keeps running underneath. |
 
 ## Framing
 | Move | In Edits |
@@ -41,7 +41,7 @@ with `clips` (or `captions`) before the next move instead of reusing old numbers
 ## Cutaways and B-roll
 | Move | In Edits |
 |---|---|
-| Cut away to B-roll (voice continues) | `extractAudio` -> `splitAt` the stretch -> `replaceElementMedia` with the clip -> `setVolume` 0 on the video piece |
+| Cut away to B-roll (voice continues) | `extractAudio` on EACH main-track piece (after the rough cut) -> `splitAt` the stretch -> `replaceElementMedia` with the clip -> `setVolume` 0 on the video piece |
 | Picture-in-picture / small screenshot | `addOverlay` (x, y, scale = fraction of canvas width) then `trim` to the moment |
 | Full-screen screenshot or graphic | `addOverlay` x 0.5 y 0.5 scale 1 |
 | Blur the background behind a card | `splitAt` the piece -> `applyEffect` `video_simple_blur` |
@@ -60,7 +60,7 @@ with `clips` (or `captions`) before the next move instead of reusing old numbers
 | Move | In Edits |
 |---|---|
 | Sound effect on a moment | `pause` -> `seek` to the frame -> `searchSoundEffects` -> `addSoundEffect` -> `setVolume` 0.3-0.35 |
-| Music bed | `listMusicTracks` (query, license royaltyFree) -> `seek` 0 -> `addSongToComposition` -> `setVolume` ~0.15-0.2 |
+| Music bed | `listMusicTracks` (query, license royaltyFree) -> `seek` 0 -> `addSongToComposition` -> `setVolume` ~0.15-0.2 -> `trim` its end to the reel's end |
 | Duck music under voice | `setDucking` on the music clip (behaviour "video" or "any", level ~0.3) (untested) |
 | Fade in / out (audio) | `setFade` fadeIn / fadeOut seconds on a music, sound or video clip (untested) |
 | Clean up a noisy room | `setVoiceEnhance` on the voice (untested) |

@@ -6,7 +6,8 @@
 
 ## Brand
 - Instagram handle: @yourhandle
-- Accent (one brand colour; can replace the yellow / lavender in the styles): #FF5A36
+- Accent (one brand colour): #FF5A36  <!-- replaces each style's main accent: Clean's yellow word, Show it's
+  lavender cards, B-roll story's lilac giant words. Leave it blank to keep the style's own colours. -->
 - Brand font (optional, file in ~/Movies/Edits-assets/fonts/, name as Edits reports it): none
 - Usual speed: 1.0x <!-- many talking-head creators speed takes to 1.1-1.3x -->
 - Favourite style: <!-- Clean / Show it / B-roll story / Minimal -->
