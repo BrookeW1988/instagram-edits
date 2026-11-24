@@ -54,6 +54,8 @@ behaviour into the "Notes from my sessions" section of `profile.md`.
   caption can come back as a ghost you can't remove), and a transparent colour doesn't work (the style still draws it).
 - **Generate captions AFTER the rough cut and before any other split.** Splitting the clip after captions exist
   makes Edits double words at the split points ("Ask ask", "So So"). If it happens, fix with `editCaption`.
+- `splitCaption` RESETS both new pieces to the style's own font and size (e.g. ATP-PleasurizeRegular 144):
+  re-apply `setTextFont`, `setTextStyle` and `setTextPosition` to both.
 - `splitCaption` at a time between two words returns two new ids; the split snaps to the real word gap, so the new
   captions' start times are exact word times (handy for timing graphics).
 - Edits writes times as "9:00 a.m.": fix to "9am" with `editCaption`.

@@ -39,7 +39,9 @@ style recipes in `SKILL_DIR/styles/`, and the editor's rulebook in `SKILL_DIR/re
 - **Real things only.** Real screens (hers, or official product images from the maker's own website), real logos,
   numbers she actually says, her own words. Never invent proof, results, quotes or numbers, and never mock up a
   screen. Blur other people's names and faces unless they agreed. No AI-generated people.
-- **Comment-keyword CTAs only if `profile.md` lists that keyword as live.** Never invent a keyword funnel.
+- **Comment-keyword CTAs only if `profile.md` lists that keyword as live.** Never invent a keyword funnel. If she
+  SAYS a keyword in the take that isn't in her profile, ask in the edit plan ("Is TICKTOCK live? If not I'll cut
+  that line"). No answer possible: cut the CTA line but keep her sign-off.
 - **Styles are "inspired by" a creator's editing techniques only.** Never their footage, logos, music or catchphrases.
 - **The Edits access token stays private** (section 2).
 - **Ask before installing or downloading anything** (ffmpeg, the Python toolbox, the free fonts). One line on what
@@ -122,9 +124,10 @@ https://claude.ai/artifact/N46Gep95Kujh6TWQyV2y2r
 
 ## 5. Build it (in Edits, with Edits' own tools)
 
-1. **New project:** `saveProject` the open one first, then `newProject` (if it errors, check `title` + `clips`:
-   the new project often opened anyway) -> `setTitle` ("<topic> - <style>") -> `setProjectDynamicRange` sdr ->
-   `setCanvas` 9:16 at 30 fps -> `addMedia` the take (full path).
+1. **Level the voice, then a new project:** `bash SKILL_DIR/scripts/level_voice.sh <take>` (even if section 3 was
+   skipped; import the `-levelled.mp4` it makes). `saveProject` the open project, then `newProject` (if it errors,
+   check `title` + `clips`: it often opened anyway) -> `setTitle` ("<topic>"; add the style to the name once it's
+   chosen) -> `setProjectDynamicRange` sdr -> `setCanvas` 9:16 at 30 fps -> `addMedia` the take (full path).
 2. **Watch it and write the edit plan** (editing-craft sections 1-2): `transcribeClip` -> `jobStatus`, read every
    word, then write the plan (hook, payoff, what gets cut, and a line per moment: time, her words, what happens
    on screen). Show it to her in plain English, then build exactly that.
@@ -143,7 +146,7 @@ after each big step.
 
 ## 6. Check your own work (on the export)
 
-Export (section 10) to `~/Movies/Edits-assets/<reel>/check.mp4`, run `bash SKILL_DIR/scripts/contact_sheet.sh
+Export (section 10) to `~/Movies/Edits-exports/<reel>.mp4` (the same file she gets at the end), run `bash SKILL_DIR/scripts/contact_sheet.sh
 <file>`, look at the sheet next to the creator's real reel, and go through the checklist at the end of
 `references/editing-craft.md`. Fix, re-export, check again. Only then tell her it's ready. Claude can't hear: ask
 her to listen to the music level and the sounds.
@@ -181,7 +184,7 @@ into "Notes from my sessions".
 ## 10. Export (for the check, or when she asks for a file)
 
 `setExportSettings` with `resolutionType` HD, `aspectRatio` nineBySixteen, `quality` high, frameRate 30,
-dynamicRange sdr (all of them, or it silently fails), then `export` to a full path in `~/Movies`. Wait until the
+dynamicRange sdr (all of them, or it silently fails), then `export` to `/Users/<name>/Movies/Edits-exports/<reel>.mp4` (make the folder first). Wait until the
 file stops growing, then check it exists and its length matches.
 
 ## 11. Posting: two routes, both need her yes

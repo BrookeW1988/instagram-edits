@@ -10,9 +10,17 @@ there's nothing to show: use Clean. Framing with some room above her head is bes
 
 ## 1. Find the screens (Claude does this, she doesn't need a library)
 For each thing she names: her own screenshot if she has one; otherwise the official image from the maker's own
-site. `~/.instagram-edits/venv/bin/python SKILL_DIR/scripts/grab_page_images.py <official page> <folder>`
-(e.g. the product's news or help page), LOOK at what came down, pick the one that shows the thing, and crop it to
-just the app window with Pillow. Save crops in `~/Movies/Edits-assets/<reel>/crops/`. Never mock up a screen.
+site. Where to look: the maker's announcement for that FEATURE (search "<maker> <feature> announcement", e.g.
+"Claude projects", "Claude connectors Gmail", "Claude skills") and its help-centre article; product home pages are
+mostly decorative art. Run `~/.instagram-edits/venv/bin/python SKILL_DIR/scripts/grab_page_images.py <page> <folder>`,
+LOOK at every image, and keep only one that clearly shows the named thing (the feature's own screen). Crop it to
+just the app window with Pillow and save it in `~/Movies/Edits-assets/<reel>/crops/`.
+- An abstract step ("build an About Me doc", "set up a folder") has no product page: use the screen where it
+  happens (a Claude chat asking questions; a folder in Claude's file view), or ask her for a screenshot.
+- Nothing shows it? Ask her in the plan, or make that beat a word stack instead. Never a loosely related screen,
+  never a mock-up.
+- **The split-demo crop** must be roughly square (about 1.1 wide : 1 tall) so at scale 1 it fills the top half;
+  a normal wide screenshot only fills a quarter. Crop the part of the screen that matters.
 
 ## 2. Make the graphics
 - **Cards:** write a spec (see the top of `scripts/show_it_cards.py`): one card per named thing, badge = the number
@@ -29,14 +37,21 @@ just the app window with Pillow. Save crops in `~/Movies/Edits-assets/<reel>/cro
    caption `setTextFont` `Inter-ExtraBold` + `setTextStyle` size 100, white + `setTextPosition` y 0.75.
 2. `splitAt` the main clip at every card's in and out time AND the split demo's in and out (cards start ON the
    number she says, ~3 s each). `applyEffect` `video_simple_blur` on each piece that sits under a card.
+   On stretches of her face longer than ~4 s with no card or stack, add a 1.06-1.08 punch-in (chin-anchored) on
+   the next sentence start.
 3. **Hook:** `addOverlay` hook.png at 0, x 0.36, y 0.15, scale 0.62, `trim` to the end of her first line.
 4. **Cards:** `addOverlay` each at its start, x 0.5, y 0.37, scale 0.95; photos default to 3 s, `trim` to fit.
 5. **Split demo (once):** on the line about using the thing ("so it can work inside your tools"), `setTransform`
    the piece you split out y 0.68 scale 1 with `allowBeyondCanvas` true (she slides down), and
    `addOverlay` the plain crop at x 0.5, y 0.255, scale 1 (fills the top half). Put that line's caption on the seam:
-   `setTextPosition` y 0.52, then `moveToLayer` the screenshot to a free low layer and the caption above it.
-6. **Stacks:** `addOverlay` each on the words, y 0.19-0.24, alternate x (0.33 / 0.5 / 0.6), scale 0.4-0.76,
-   1.5-5 s. Keep the whole stack inside the frame (check the right edge).
+   `setTextPosition` y 0.52 (if the split starts mid-caption, `splitCaption` at the split time first and re-apply
+   font/size), then `moveToLayer` the screenshot to a free low layer and the caption above it: every `addOverlay`
+   makes its own track, `tracks` lists them in order (0 = main video, 1 = captions), and a "free" layer is an
+   overlay track with nothing on it at that time (e.g. the hook's track after the hook ends).
+6. **Stacks:** `addOverlay` each on the words, alternate x (0.33 / 0.5 / 0.6), 1.5-5 s. Size and height depend on
+   her framing: `captureFrame` and place the stack ABOVE the top of her head (often y 0.15-0.22) at the biggest
+   scale that stays inside the frame (often 0.6-0.9 for 2-line stacks). It must not sit on her hair or face, and
+   no part may run past an edge.
 7. **Sound:** `pause`, `seek` to each card, `addSoundEffect` "Lip pop (sharp)", volume 0.35. "Page flip 1" at
    0.3 on the split. No music needed (add a royalty-free bed only if she wants one).
 8. **Grade:** `addAdjustmentLayer` + `applyAdjust` temperature +8, exposure +3.

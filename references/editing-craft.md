@@ -48,7 +48,16 @@ One line per moment: time, what she says, what happens on screen. Ask nothing un
 - **Never:** a trim under 0.15 s (reads as a glitch), a cut inside a word or on a soft word ending ("credits"
   becoming "credit"), more than one cut inside a spoken list (play the list as one run).
 - Before cutting a "repeat", check it really is one (a word split into two tokens looks like a stutter).
-- Cut BEFORE an off-camera glance, not after. First word within 0.5 s of the start. End ~0.35 s after the last word.
+- **False starts:** keep the LAST clean go. Cut from the end of the last good word before the stumble to the start
+  of the clean restart. If the transcript stretches a word over ~1 s ("ask" lasting 1 s), the stumble is inside
+  it: cut to the start of the next word after it, then `captureFrame` and read the caption at that join to check.
+- **Words closer than 0.15 s at a cut point:** move the cut to the nearest gap of 0.15 s or more, or skip that cut.
+  After cutting, look for one-frame caption or sound fragments at each join and remove or merge them
+  (`mergeCaptions`, `deleteSoundEffect`).
+- Cut BEFORE an off-camera glance, not after. First word within 0.5 s of the start. End ~0.35 s after the last word
+  (if the take ends sooner, leave it).
+- Her spoken CTA with a keyword that isn't live: see SKILL.md section 0 (ask in the plan; otherwise cut the CTA
+  line, keep the sign-off).
 - Speed: only if she likes it (`profile.md`), 1.1-1.3x, never more.
 
 ## 4. Pacing
@@ -79,12 +88,16 @@ One line per moment: time, what she says, what happens on screen. Ask nothing un
 | B-roll story | Inter Tight Regular | 54 | lowercase | y 0.88, x cycling 0.22 / 0.5 / 0.78 | 1-4 words |
 | Minimal | Newsreader | default | as spoken | y 0.80 | one short line |
 
-- Always set y with `setTextPosition` (Edits' default can land on her mouth). Never over her eyes or mouth, never
+- Always set y with `setTextPosition` (Edits' default can land on her mouth). The table's y is a starting point:
+  `captureFrame` one frame, find her chin, and put captions at chin + ~0.05 (between 0.72 and 0.88). Tight framing
+  needs them lower. Never over her eyes or mouth, never
   behind her head, nothing in the bottom ~20% or right edge (Instagram's buttons).
 - **Captions go on straight after the rough cut, BEFORE any other split.** Captions generated over a clip that's
   already in pieces double the words at every join ("Ask ask"). Read the caption at every rough-cut join and fix
   doubles with `editCaption`. Splits made after the captions exist don't touch them.
-- Set fonts LAST: `setCaptionStyle` and `editCaption` reset font and size, so the order is generate ->
+- Set fonts LAST: `setCaptionStyle`, `editCaption` AND `splitCaption` all reset font and size (a split piece comes
+  back in the style's own font, e.g. ATP-PleasurizeRegular 144), so after ANY of them re-apply font, size and
+  position to the captions it touched. The order is generate ->
   `splitCaption` -> style -> highlight colour -> edit text -> `setTextFont` + `setTextStyle` + `setTextPosition`.
 - **Proofread every caption** against what she said: product names ("Claude" not "cloud"), times ("9am" not
   "9:00 a.m."), her name, doubled words.
@@ -100,6 +113,9 @@ One line per moment: time, what she says, what happens on screen. Ask nothing un
 - **Show, don't describe.** A card or B-roll shot shows the actual thing she names: her screenshot, the official
   image from the maker's own site (`scripts/grab_page_images.py`), or her own footage. Never an empty styled box,
   a mock-up, invented replies or AI people.
+- **The screen must show THAT thing, not something nearby.** "Connect your apps like Gmail" needs a connectors
+  screen with Gmail on it, not any Claude screen and never a pricing page. If no image you can find shows it, ask
+  her for a screenshot in the plan, or swap that beat for a word stack. A loosely related screen is worse than none.
 - Lists: one visual per spoken item, landing on its word.
 - One new element at a time. Proof shows before or as the claim is spoken.
 - Holds: cards and screenshots ~2-3 s; full-screen beats 2-3 s max; GIFs 1.2-2 s; graphics on screen less than
@@ -138,7 +154,8 @@ through this list out loud and fix anything that fails (three passes at most, th
 - [ ] Nothing clipped at any edge; nothing in the bottom 20% / right-edge button zone.
 - [ ] Something changes about every 2 s; nothing on her face over ~4 s without a change.
 - [ ] Every card or cutaway shows the REAL thing, landing on its word.
-- [ ] No orphan words (a lone "a" or "the" on screen), no trims under 0.15 s, sign-off intact.
+- [ ] No orphan words (a lone "a" or "the" left on screen with nothing after it; one-word-at-a-time caption
+  styles are fine), no trims under 0.15 s, sign-off intact.
 - [ ] No ghosting, no frozen cut-outs, no transitions or shakes.
 - [ ] Length matches what the plan expected (rough cut removed what it said it would).
 - [ ] Sound: you can't hear it, so ask her to listen to the music level and the pops on her phone speaker.

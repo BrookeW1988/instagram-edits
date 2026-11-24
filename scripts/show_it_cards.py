@@ -64,7 +64,11 @@ def rounded_mask(size, r):
 
 def framed(shot, max_w, max_h, border=6, radius=30):
     s = Image.open(shot).convert("RGB")
-    s.thumbnail((max_w, max_h), Image.LANCZOS)
+    # fit the box both ways: shrink big screenshots AND enlarge small ones, so every card's screen is the same size
+    k = min(max_w / s.width, max_h / s.height)
+    s = s.resize((round(s.width * k), round(s.height * k)), Image.LANCZOS)
+    if k > 2:
+        print(f"WARNING {os.path.basename(shot)}: enlarged {k:.1f}x, it may look soft; find a bigger image if you can")
     f = Image.new("RGBA", (s.width + border * 2, s.height + border * 2), (255, 255, 255, 255))
     f.paste(s, (border, border))
     f.putalpha(rounded_mask(f.size, radius))
